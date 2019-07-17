@@ -13,7 +13,7 @@
         <!--track-->
         <scene sceneID="hNz-n2-bh7">
             <objects>
-                <viewController id="9pv-A4-QxB" customClass="TrackingViewController" sceneMemberID="viewController">
+                <viewController id="9pv-A4-QxB" customClass="TrackingViewController" customModule="JourneyTracker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="tsR-hK-woN">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -35,6 +35,9 @@
                         <viewLayoutGuide key="safeArea" id="PQr-Ze-W5v"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="track" image="track" id="acW-dT-cKf"/>
+                    <connections>
+                        <outlet property="mapview" destination="g7t-le-MzY" id="dNe-MZ-fD8"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
             </objects>
@@ -61,7 +64,7 @@
         <!--Journey View Controller-->
         <scene sceneID="ThC-TG-Ijd">
             <objects>
-                <viewController id="DZU-Xj-Ovm" customClass="JourneyViewController" sceneMemberID="viewController">
+                <viewController id="DZU-Xj-Ovm" customClass="JourneyViewController" customModule="JourneyTracker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="zJm-x6-sfB">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

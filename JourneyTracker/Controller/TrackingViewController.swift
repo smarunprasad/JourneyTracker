@@ -8,13 +8,25 @@
 
 import UIKit
 
-class FirstViewController: UIViewController {
+class TrackingViewController: BaseViewController {
+
+    var trackViewModel: TrackingViewModel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        setUpUI()
+        setUpModel()
     }
 
-
+    func setUpUI() {
+        
+       
+        
+    }
+    
+    func setUpModel() {
+        
+    }
 }
 

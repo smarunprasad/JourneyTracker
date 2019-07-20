@@ -24,9 +24,30 @@
                                     <outlet property="delegate" destination="9pv-A4-QxB" id="lZZ-Ax-0up"/>
                                 </connections>
                             </mapView>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gTo-aV-x7Y">
+                                <rect key="frame" x="107" y="60" width="51" height="31"/>
+                                <connections>
+                                    <action selector="trackMeValueChanged:" destination="9pv-A4-QxB" eventType="valueChanged" id="gbW-hk-NWm"/>
+                                </connections>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Track Me" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="akq-oP-6OM">
+                                <rect key="frame" x="15" y="63" width="80" height="25"/>
+                                <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="HVE-nm-czv"/>
+                                    <constraint firstAttribute="height" constant="25" id="x7Q-H0-ymD"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="akq-oP-6OM" firstAttribute="centerY" secondItem="gTo-aV-x7Y" secondAttribute="centerY" id="6oi-yh-Q36"/>
+                            <constraint firstItem="akq-oP-6OM" firstAttribute="leading" secondItem="PQr-Ze-W5v" secondAttribute="leading" constant="15" id="7Rr-GO-oRE"/>
+                            <constraint firstItem="gTo-aV-x7Y" firstAttribute="top" secondItem="PQr-Ze-W5v" secondAttribute="top" constant="16" id="AEi-Xt-rj7"/>
+                            <constraint firstItem="gTo-aV-x7Y" firstAttribute="leading" secondItem="akq-oP-6OM" secondAttribute="trailing" constant="12" id="KdX-aA-uLI"/>
                             <constraint firstItem="g7t-le-MzY" firstAttribute="top" secondItem="tsR-hK-woN" secondAttribute="top" id="OVF-6r-Xm2"/>
                             <constraint firstItem="PQr-Ze-W5v" firstAttribute="bottom" secondItem="g7t-le-MzY" secondAttribute="bottom" id="eMG-lU-Rv9"/>
                             <constraint firstItem="PQr-Ze-W5v" firstAttribute="trailing" secondItem="g7t-le-MzY" secondAttribute="trailing" id="m9D-Pm-qjh"/>
@@ -37,11 +58,12 @@
                     <tabBarItem key="tabBarItem" title="track" image="track" id="acW-dT-cKf"/>
                     <connections>
                         <outlet property="mapView" destination="g7t-le-MzY" id="XfR-pu-shp"/>
+                        <outlet property="tractingSwitch" destination="gTo-aV-x7Y" id="pD5-b4-Vua"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="750" y="-320"/>
+            <point key="canvasLocation" x="749.27536231884062" y="-320.08928571428572"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
@@ -68,10 +90,28 @@
                     <view key="view" contentMode="scaleToFill" id="zJm-x6-sfB">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="5EO-0W-9zT">
+                                <rect key="frame" x="0.0" y="44" width="414" height="769"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="delegate" destination="DZU-Xj-Ovm" id="iON-65-UbF"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="5EO-0W-9zT" firstAttribute="leading" secondItem="dGb-Aw-4vO" secondAttribute="leading" id="0Y3-J0-GvN"/>
+                            <constraint firstItem="5EO-0W-9zT" firstAttribute="top" secondItem="dGb-Aw-4vO" secondAttribute="top" id="Lzh-nE-B1y"/>
+                            <constraint firstItem="dGb-Aw-4vO" firstAttribute="trailing" secondItem="5EO-0W-9zT" secondAttribute="trailing" id="Oeo-Mh-Tnu"/>
+                            <constraint firstItem="dGb-Aw-4vO" firstAttribute="bottom" secondItem="5EO-0W-9zT" secondAttribute="bottom" id="hCD-7m-9uJ"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="dGb-Aw-4vO"/>
                     </view>
                     <tabBarItem key="tabBarItem" systemItem="history" id="Hht-PD-hVX"/>
+                    <connections>
+                        <outlet property="tableView" destination="5EO-0W-9zT" id="OKp-bt-8ai"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vsP-hx-QDZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

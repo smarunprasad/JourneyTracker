@@ -1,0 +1,6 @@
+framework module Pods_JourneyTracker {
+  umbrella header "Pods-JourneyTracker-umbrella.h"
+
+  export *
+  module * { export * }
+}

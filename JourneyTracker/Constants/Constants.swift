@@ -25,9 +25,14 @@ struct Constants {
         
         static let cancel = "Cancel"
         static let ok = "Ok"
-        
         static let source = "Source"
         static let destination = "Destination"
+    }
+    
+    struct KeyChain {
+        
+        static let isTracking = "isTracking"
+        static let journey = "journey"
     }
     
     struct Message {

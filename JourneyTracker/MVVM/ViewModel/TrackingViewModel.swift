@@ -13,13 +13,9 @@ import SwiftKeychainWrapper
 
 class TrackingViewModel {
     
-    var reloadDataBlock: (() -> Void) = {
-        
-    }
+    var reloadDataBlock: (()-> Void)?
     
-    var switchStatChanged: ((Bool) -> Void) = { aBool in
-        
-    }
+    var switchStatChanged: ((Bool)-> Void)?
     
     var polyline: MKPolyline?
     var sourceLocation = CLLocation()
@@ -151,7 +147,6 @@ class TrackingViewModel {
         //2.
         // Calculate the direction using directionRequest
         let directions = MKDirections(request: directionRequest)
-        var isCalculated = false
         //3.
         //Direction Request
         directions.calculate { (response, error) in
@@ -171,16 +166,10 @@ class TrackingViewModel {
             //5.
             //Add the polyline to the variable
             self.polyline = route.polyline
-            isCalculated = true
+            
             //6.
             //Returning the polyline to controller to update the map view
-            self.reloadDataBlock()
-        }
-        
-        if isCalculated {
-            //6.
-            //Returning the polyline to controller to update the map view
-            self.reloadDataBlock()
+            self.reloadDataBlock?()
         }
     }
     
@@ -224,7 +213,7 @@ class TrackingViewModel {
         KeychainManager.setIsTrackingStatusToWapper(isTracking: state)
         
         //update the map view 
-        self.switchStatChanged(state)
+        self.switchStatChanged?(state)
     }
     
     //MARK:- Save value in model & keychain Helper

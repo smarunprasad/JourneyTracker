@@ -45,6 +45,13 @@ class TrackingViewController: BaseViewController {
      
         self.trackViewModel = TrackingViewModel()
         
+        //2.
+        // locationManager setup
+        self.locationManager.requestAlwaysAuthorization()
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        self.locationManager.distanceFilter = 2
+        self.locationManager.delegate = self
+        
         //To change the mapview with journey data or current data
         if self.trackingModel == nil {
             
@@ -53,6 +60,7 @@ class TrackingViewController: BaseViewController {
             
             self.trackViewModel.isForTracking = true
             self.trackViewModel.isTracking = KeychainManager.getIsTrackingStatusFromWapper()
+
             //FIXME: Testing
             self.sourceLocation = CLLocation.init(latitude: 51.5079, longitude: 0.1378)
 
@@ -109,16 +117,8 @@ class TrackingViewController: BaseViewController {
     }
     
     func setupLocationManagerandZoomLevel() {
-        
-        //1.
-        // locationManager setup
-        self.locationManager.requestAlwaysAuthorization()
-        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        self.locationManager.distanceFilter = 1000
-        self.locationManager.delegate = self
-        self.locationManager.startUpdatingLocation()
-        
-        
+
+        locationManager.startUpdatingLocation()
         //2.
         //Zoom to user location
         if let userLocation = locationManager.location {
@@ -175,7 +175,7 @@ class TrackingViewController: BaseViewController {
         //Switch status handler
         trackViewModel.switchStatChanged = { isEnable in
             
-           
+           self.changeMapViewData(isEnable: isEnable)
         }
     }
     
@@ -206,7 +206,7 @@ class TrackingViewController: BaseViewController {
     @IBAction func trackMeValueChanged(_ sender: Bool) {
         
         trackViewModel.switchValueChanged(state: tractingSwitch.isOn)
-        self.changeMapViewData(isEnable: tractingSwitch.isOn)
+       // self.changeMapViewData(isEnable: tractingSwitch.isOn)
     }
     
     //MARK:- Helper

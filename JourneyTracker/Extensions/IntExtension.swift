@@ -10,7 +10,7 @@ import Foundation
 
 extension Int {
     
-    func stringFromTimeInterval() -> String {
+    func stringFromTimeInterval() -> String? {
                 
         let minutes = self % 60
         let hours = (self / 60) % 60

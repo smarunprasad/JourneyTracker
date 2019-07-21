@@ -16,4 +16,13 @@ extension Date {
     init(milliseconds:Int64) {
         self = Date(timeIntervalSince1970: TimeInterval(milliseconds) / 1000)
     }
+    
+    func convertDateFormater() -> String {
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"//1977-05-25T07:00:00Z
+        dateFormatter.dateFormat = Constants.AppDateFormate.appDateFormate
+        
+        return  dateFormatter.string(from: self)
+    }
 }

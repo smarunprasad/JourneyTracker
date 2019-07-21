@@ -23,7 +23,8 @@ class TrackingViewController: BaseViewController {
             self.tractingSwitch.isOn = KeychainManager.getIsTrackingStatusFromWapper()
         }
     }
-    
+    @IBOutlet weak var trackMeLabel: UILabel!
+
     //MARK:- View init
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,9 +43,6 @@ class TrackingViewController: BaseViewController {
         self.mapView.layoutMargins = UIEdgeInsets.init(top: 20, left: 20, bottom: 20, right: 20)
         self.mapView.delegate = self
      
-        //Testing
-        self.sourceLocation = CLLocation.init(latitude: 51.5079, longitude: 0.1378)
-
         self.trackViewModel = TrackingViewModel()
         
         //To change the mapview with journey data or current data
@@ -53,6 +51,11 @@ class TrackingViewController: BaseViewController {
 //                        KeychainManager.removeWapperForKey(key: Constants.KeyChain.isTracking)
 //                        KeychainManager.removeWapperForKey(key: Constants.KeyChain.journey)
             
+            self.trackViewModel.isForTracking = true
+            self.trackViewModel.isTracking = KeychainManager.getIsTrackingStatusFromWapper()
+            //FIXME: Testing
+            self.sourceLocation = CLLocation.init(latitude: 51.5079, longitude: 0.1378)
+
             if KeychainManager.getIsTrackingStatusFromWapper() == true {
                 
                 //1.
@@ -86,6 +89,20 @@ class TrackingViewController: BaseViewController {
         }
         else {
             
+            //FIXME: Testing
+             self.sourceLocation = CLLocation.getLocationFrom(lat: self.trackingModel.sourceLat, long: self.trackingModel.sourceLong)
+
+            //1.
+            //Passing the start location to the view model
+            self.trackViewModel.sourceLocation = self.sourceLocation
+
+            //2.
+            //Hide the switch & lable
+            self.trackMeLabel.isHidden = true
+            self.tractingSwitch.isHidden = true
+            self.trackViewModel.isForTracking = false
+            
+            //3.
             //Passing the value to view model to update the map
             self.trackViewModel.setupJouneyPoints(trackingModel: self.trackingModel)
         }
@@ -164,22 +181,24 @@ class TrackingViewController: BaseViewController {
     
     func changeMapViewData(isEnable: Bool) {
         
-        if isEnable == true {
-            
-            //1.
-            //reinit
-            self.trackViewModel = TrackingViewModel()
-            self.trackingModel = nil
-            //2.
-            //Setup the mapview to zoom to current location & disable the location update
-            self.setupLocationManagerandZoomLevel()
-        }
-        else {
-            
-            
-            //3.
-            //Initiate the location manager and update the mapView based on the location changes
-            self.setupMapforNotTrackingState()
+        DispatchQueue.main.async {
+           
+            if isEnable == true {
+    
+                //1.
+                //reinit
+                self.trackViewModel = TrackingViewModel()
+                self.trackingModel = nil
+                
+                //2.
+                //Setup the mapview to zoom to current location & disable the location update
+                self.setupLocationManagerandZoomLevel()
+            }
+            else {
+                
+                //Initiate the location manager and update the mapView based on the location changes
+                self.setupMapforNotTrackingState()
+            }
         }
     }
     

@@ -14,7 +14,7 @@ import SwiftKeychainWrapper
 class TrackingViewModel {
     
     var reloadDataBlock: (() -> Void) = {
-
+        
     }
     
     var switchStatChanged: ((Bool) -> Void) = { aBool in
@@ -25,6 +25,8 @@ class TrackingViewModel {
     var sourceLocation = CLLocation()
     var pointAnnotation = [MKPointAnnotation]()
     var trackingModel: TrackingModel!
+    var isForTracking: Bool!
+    var isTracking: Bool!
     
     private var lastJourneyId = 0
     private var allJourney: [TrackingModel] =  [TrackingModel]()
@@ -86,16 +88,18 @@ class TrackingViewModel {
         //Returns the polyline direction between 2 mapitem in reloadDataBlock
         getDirectionBetweenTheMapItems(sourceMapItem: items.source, destinationMapItem: items.destination)
         
-        if self.source == nil {
+        //check is the map appear for tracking or appear for view
+        if isForTracking == true {
             
-            //11.
-            //Setting the source location in the model
-            getPlacedetailsFromLocation(location: self.sourceLocation)
+            if self.source == nil {
+                //11.
+                //Setting the source location in the model
+                getPlacedetailsFromLocation(location: self.sourceLocation)
+            }
+            //12.
+            //Setting the destination location in the model
+            getPlacedetailsFromLocation(location: location)
         }
-        
-        //12.
-        //Setting the destination location in the model
-        getPlacedetailsFromLocation(location: location)
     }
     
     func getAnnotationsFromCoordinate(source: CLLocationCoordinate2D) ->
@@ -147,7 +151,7 @@ class TrackingViewModel {
         //2.
         // Calculate the direction using directionRequest
         let directions = MKDirections(request: directionRequest)
-        
+        var isCalculated = false
         //3.
         //Direction Request
         directions.calculate { (response, error) in
@@ -167,7 +171,13 @@ class TrackingViewModel {
             //5.
             //Add the polyline to the variable
             self.polyline = route.polyline
-            
+            isCalculated = true
+            //6.
+            //Returning the polyline to controller to update the map view
+            self.reloadDataBlock()
+        }
+        
+        if isCalculated {
             //6.
             //Returning the polyline to controller to update the map view
             self.reloadDataBlock()
@@ -200,8 +210,7 @@ class TrackingViewModel {
     //MARK:- Switch Actiopn Helper
     func switchValueChanged(state: Bool) {
         
-        //Adding the value in the keychain
-        KeychainManager.setIsTrackingStatusToWapper(isTracking: state)
+        isTracking = state
         
         if state == false {
             
@@ -210,6 +219,9 @@ class TrackingViewModel {
                 saveValueInModel()
             }
         }
+        
+        //Adding the value in the keychain
+        KeychainManager.setIsTrackingStatusToWapper(isTracking: state)
         
         //update the map view 
         self.switchStatChanged(state)
@@ -315,13 +327,6 @@ class TrackingViewModel {
         //2.
         //Get all values from the keychain
         allJourney = KeychainManager.getALLDataFromWapper()
-        
-        //3.
-        //Adding the value to last JourneyId
-        if allJourney.isEmpty == false,  let journey = allJourney.last {
-            self.lastJourneyId = journey.journeyId
-        }
-        
     }
     
     func saveValueInModel() {
@@ -342,16 +347,29 @@ class TrackingViewModel {
         //checking the array contains the value
         //Getting the last object to update the the journey id in keychain
         //Checking is there any tracking is in progress
-        if allJourney.isEmpty == false, let journey = allJourney.last, KeychainManager.getIsTrackingStatusFromWapper() == false {
-            //5.
-            //Update the value to the journeyID
-            self.lastJourneyId = journey.journeyId + 1
+        if allJourney.isEmpty == false, let journey = allJourney.last {
+            
+            if isTracking == true {
+                
+                isTracking = false
+                //5.
+                //Update the value to the journeyID
+                self.lastJourneyId = journey.journeyId + 1
+            }
+            else {
+                //Using the same id for the current journey
+                self.lastJourneyId = journey.journeyId
+            }
         }
-        
+        else {
+            if isTracking == true {
+                isTracking = !isTracking
+            }
+        }
         //6.
         //Filter the array
         allJourney = allJourney.filter({ $0.journeyId !=  self.lastJourneyId  })
-      
+        
         //7.
         //Adding the values in the model
         self.trackingModel = TrackingModel.init(journeyId: self.lastJourneyId, duration: duration, StartDate: startDate, endDate: endDate, source: source!, destination: destination!, sourceLat: Float(sourcePoint.latitude), sourceLong: Float(sourcePoint.longitude), travelledPoints: travelledPoints)

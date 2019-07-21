@@ -14,7 +14,7 @@ class KeychainManager {
     static func setIsTrackingStatusToWapper(isTracking: Bool) {
         
         //Saving the bool in the keychain wrapper it returns the bool value
-        let value = KeychainWrapper.standard.set(isTracking, forKey: Constants.KeyChain.isTracking)
+        let _ = KeychainWrapper.standard.set(isTracking, forKey: Constants.KeyChain.isTracking)
         
     }
     

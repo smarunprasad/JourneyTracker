@@ -12,7 +12,6 @@
 		F402B12D22DFA3600021BF70 /* TrackingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F402B12C22DFA3600021BF70 /* TrackingModel.swift */; };
 		F402B12F22DFB9300021BF70 /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F402B12E22DFB9300021BF70 /* ViewControllerExtension.swift */; };
 		F408E5B922DEDDDF00543047 /* TrackingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F408E5B822DEDDDF00543047 /* TrackingViewModel.swift */; };
-		F408E5BB22DEDDF800543047 /* JourneyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F408E5BA22DEDDF800543047 /* JourneyViewModel.swift */; };
 		F408E5BE22DEDE1500543047 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F408E5BD22DEDE1500543047 /* MapKit.framework */; };
 		F408E5C022DEDEF300543047 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F408E5BF22DEDEF300543047 /* BaseViewController.swift */; };
 		F408E5C322DEDF5000543047 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F408E5C222DEDF5000543047 /* Constants.swift */; };
@@ -28,6 +27,10 @@
 		F4BFAD5622E28D5100A4D8A0 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BFAD5522E28D5100A4D8A0 /* DateExtension.swift */; };
 		F4E9E49022E327CE00D079A2 /* CLLocationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E9E48F22E327CE00D079A2 /* CLLocationExtension.swift */; };
 		F4E9E49522E3338F00D079A2 /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E9E49422E3338F00D079A2 /* KeychainManager.swift */; };
+		F4E9E49722E3C07200D079A2 /* JourneyDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E9E49622E3C07200D079A2 /* JourneyDataSource.swift */; };
+		F4E9E49A22E3C22B00D079A2 /* JourneyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E9E49822E3C22B00D079A2 /* JourneyTableViewCell.swift */; };
+		F4E9E49B22E3C22B00D079A2 /* JourneyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4E9E49922E3C22B00D079A2 /* JourneyTableViewCell.xib */; };
+		F4E9E49D22E3CF5300D079A2 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E9E49C22E3CF5300D079A2 /* ViewExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,7 +53,6 @@
 		F402B12C22DFA3600021BF70 /* TrackingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingModel.swift; sourceTree = "<group>"; };
 		F402B12E22DFB9300021BF70 /* ViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtension.swift; sourceTree = "<group>"; };
 		F408E5B822DEDDDF00543047 /* TrackingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingViewModel.swift; sourceTree = "<group>"; };
-		F408E5BA22DEDDF800543047 /* JourneyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JourneyViewModel.swift; sourceTree = "<group>"; };
 		F408E5BD22DEDE1500543047 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		F408E5BF22DEDEF300543047 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		F408E5C222DEDF5000543047 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -70,6 +72,10 @@
 		F4BFAD5522E28D5100A4D8A0 /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		F4E9E48F22E327CE00D079A2 /* CLLocationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLLocationExtension.swift; sourceTree = "<group>"; };
 		F4E9E49422E3338F00D079A2 /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
+		F4E9E49622E3C07200D079A2 /* JourneyDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JourneyDataSource.swift; sourceTree = "<group>"; };
+		F4E9E49822E3C22B00D079A2 /* JourneyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JourneyTableViewCell.swift; sourceTree = "<group>"; };
+		F4E9E49922E3C22B00D079A2 /* JourneyTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = JourneyTableViewCell.xib; sourceTree = "<group>"; };
+		F4E9E49C22E3CF5300D079A2 /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				F402B12E22DFB9300021BF70 /* ViewControllerExtension.swift */,
+				F4E9E49C22E3CF5300D079A2 /* ViewExtension.swift */,
 				F4BFAD5322E2792900A4D8A0 /* IntExtension.swift */,
 				F4BFAD5522E28D5100A4D8A0 /* DateExtension.swift */,
 				F4BFAD5122E267A100A4D8A0 /* CLLocationManagerExtension.swift */,
@@ -201,6 +208,7 @@
 		F47B8F6122DD143400A2ECAE /* DataSource */ = {
 			isa = PBXGroup;
 			children = (
+				F4E9E49622E3C07200D079A2 /* JourneyDataSource.swift */,
 			);
 			path = DataSource;
 			sourceTree = "<group>";
@@ -242,7 +250,6 @@
 			isa = PBXGroup;
 			children = (
 				F408E5B822DEDDDF00543047 /* TrackingViewModel.swift */,
-				F408E5BA22DEDDF800543047 /* JourneyViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -250,6 +257,8 @@
 		F47B8F6822DD153600A2ECAE /* TableViewCell */ = {
 			isa = PBXGroup;
 			children = (
+				F4E9E49822E3C22B00D079A2 /* JourneyTableViewCell.swift */,
+				F4E9E49922E3C22B00D079A2 /* JourneyTableViewCell.xib */,
 			);
 			path = TableViewCell;
 			sourceTree = "<group>";
@@ -364,6 +373,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F4E9E49B22E3C22B00D079A2 /* JourneyTableViewCell.xib in Resources */,
 				F47B8F4822DD11B300A2ECAE /* LaunchScreen.storyboard in Resources */,
 				F47B8F4522DD11B300A2ECAE /* Assets.xcassets in Resources */,
 				F47B8F4322DD11B100A2ECAE /* Main.storyboard in Resources */,
@@ -448,18 +458,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F4E9E49722E3C07200D079A2 /* JourneyDataSource.swift in Sources */,
 				F47B8F4022DD11B100A2ECAE /* JourneyViewController.swift in Sources */,
 				F4E9E49022E327CE00D079A2 /* CLLocationExtension.swift in Sources */,
 				F408E5B922DEDDDF00543047 /* TrackingViewModel.swift in Sources */,
+				F4E9E49A22E3C22B00D079A2 /* JourneyTableViewCell.swift in Sources */,
 				F402B12D22DFA3600021BF70 /* TrackingModel.swift in Sources */,
 				F402B12F22DFB9300021BF70 /* ViewControllerExtension.swift in Sources */,
 				F4BFAD5222E267A100A4D8A0 /* CLLocationManagerExtension.swift in Sources */,
 				F4BFAD5622E28D5100A4D8A0 /* DateExtension.swift in Sources */,
-				F408E5BB22DEDDF800543047 /* JourneyViewModel.swift in Sources */,
 				F4BFAD5422E2792900A4D8A0 /* IntExtension.swift in Sources */,
 				F4E9E49522E3338F00D079A2 /* KeychainManager.swift in Sources */,
 				F47B8F3C22DD11B100A2ECAE /* AppDelegate.swift in Sources */,
 				F408E5C322DEDF5000543047 /* Constants.swift in Sources */,
+				F4E9E49D22E3CF5300D079A2 /* ViewExtension.swift in Sources */,
 				F47B8F3E22DD11B100A2ECAE /* TrackingViewController.swift in Sources */,
 				F408E5C022DEDEF300543047 /* BaseViewController.swift in Sources */,
 			);

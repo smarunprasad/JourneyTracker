@@ -43,7 +43,7 @@ struct Constants {
     
     struct AppDateFormate {
         
-        static let appDateFormate = "MMM dd, yyyy"
+        static let appDateFormate = "MMM dd hh:mm a"
         
     }
 }

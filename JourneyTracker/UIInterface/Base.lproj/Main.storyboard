@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="6cT-mo-Xq1">
     <device id="retina6_1" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -13,25 +13,25 @@
         <!--track-->
         <scene sceneID="hNz-n2-bh7">
             <objects>
-                <viewController id="9pv-A4-QxB" customClass="TrackingViewController" customModule="JourneyTracker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TrackingViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="9pv-A4-QxB" customClass="TrackingViewController" customModule="JourneyTracker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="tsR-hK-woN">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="g7t-le-MzY">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <connections>
                                     <outlet property="delegate" destination="9pv-A4-QxB" id="lZZ-Ax-0up"/>
                                 </connections>
                             </mapView>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gTo-aV-x7Y">
-                                <rect key="frame" x="107" y="60" width="51" height="31"/>
+                                <rect key="frame" x="107" y="104" width="51" height="31"/>
                                 <connections>
                                     <action selector="trackMeValueChanged:" destination="9pv-A4-QxB" eventType="valueChanged" id="gbW-hk-NWm"/>
                                 </connections>
                             </switch>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Track Me" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="akq-oP-6OM">
-                                <rect key="frame" x="15" y="63" width="80" height="25"/>
+                                <rect key="frame" x="15" y="107" width="80" height="25"/>
                                 <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="HVE-nm-czv"/>
@@ -49,7 +49,7 @@
                             <constraint firstItem="gTo-aV-x7Y" firstAttribute="top" secondItem="PQr-Ze-W5v" secondAttribute="top" constant="16" id="AEi-Xt-rj7"/>
                             <constraint firstItem="gTo-aV-x7Y" firstAttribute="leading" secondItem="akq-oP-6OM" secondAttribute="trailing" constant="12" id="KdX-aA-uLI"/>
                             <constraint firstItem="g7t-le-MzY" firstAttribute="top" secondItem="tsR-hK-woN" secondAttribute="top" id="OVF-6r-Xm2"/>
-                            <constraint firstItem="PQr-Ze-W5v" firstAttribute="bottom" secondItem="g7t-le-MzY" secondAttribute="bottom" id="eMG-lU-Rv9"/>
+                            <constraint firstAttribute="bottom" secondItem="g7t-le-MzY" secondAttribute="bottom" id="eMG-lU-Rv9"/>
                             <constraint firstItem="PQr-Ze-W5v" firstAttribute="trailing" secondItem="g7t-le-MzY" secondAttribute="trailing" id="m9D-Pm-qjh"/>
                             <constraint firstItem="g7t-le-MzY" firstAttribute="leading" secondItem="PQr-Ze-W5v" secondAttribute="leading" id="x4D-gh-BDR"/>
                         </constraints>
@@ -58,6 +58,7 @@
                     <tabBarItem key="tabBarItem" title="track" image="track" id="acW-dT-cKf"/>
                     <connections>
                         <outlet property="mapView" destination="g7t-le-MzY" id="XfR-pu-shp"/>
+                        <outlet property="trackMeLabel" destination="akq-oP-6OM" id="jXW-9d-lCw"/>
                         <outlet property="tractingSwitch" destination="gTo-aV-x7Y" id="pD5-b4-Vua"/>
                     </connections>
                 </viewController>
@@ -65,10 +66,27 @@
             </objects>
             <point key="canvasLocation" x="749.27536231884062" y="-320.08928571428572"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Navigation Controller-->
+        <scene sceneID="ABQ-YN-KDB">
+            <objects>
+                <navigationController id="6cT-mo-Xq1" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="qi3-H6-v4u">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="49e-Tb-3d3" kind="relationship" relationship="rootViewController" id="eNx-D7-4G6"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XzS-UG-13g" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-861" y="-1"/>
+        </scene>
+        <!--Journey Tracker-->
         <scene sceneID="yl2-sM-qoP">
             <objects>
                 <tabBarController id="49e-Tb-3d3" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" title="Journey Tracker" id="FbY-N0-YCF"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="W28-zg-YXA">
                         <rect key="frame" x="0.0" y="975" width="768" height="49"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -92,7 +110,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="5EO-0W-9zT">
-                                <rect key="frame" x="0.0" y="44" width="414" height="769"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <outlet property="delegate" destination="DZU-Xj-Ovm" id="iON-65-UbF"/>

@@ -13,7 +13,6 @@
 		F402B12F22DFB9300021BF70 /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F402B12E22DFB9300021BF70 /* ViewControllerExtension.swift */; };
 		F408E5B922DEDDDF00543047 /* TrackingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F408E5B822DEDDDF00543047 /* TrackingViewModel.swift */; };
 		F408E5BE22DEDE1500543047 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F408E5BD22DEDE1500543047 /* MapKit.framework */; };
-		F408E5C022DEDEF300543047 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F408E5BF22DEDEF300543047 /* BaseViewController.swift */; };
 		F408E5C322DEDF5000543047 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F408E5C222DEDF5000543047 /* Constants.swift */; };
 		F47B8F3C22DD11B100A2ECAE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47B8F3B22DD11B100A2ECAE /* AppDelegate.swift */; };
 		F47B8F3E22DD11B100A2ECAE /* TrackingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47B8F3D22DD11B100A2ECAE /* TrackingViewController.swift */; };
@@ -54,7 +53,6 @@
 		F402B12E22DFB9300021BF70 /* ViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtension.swift; sourceTree = "<group>"; };
 		F408E5B822DEDDDF00543047 /* TrackingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingViewModel.swift; sourceTree = "<group>"; };
 		F408E5BD22DEDE1500543047 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		F408E5BF22DEDEF300543047 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		F408E5C222DEDF5000543047 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		F47B8F3822DD11B100A2ECAE /* JourneyTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JourneyTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F47B8F3B22DD11B100A2ECAE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -268,7 +266,6 @@
 			children = (
 				F47B8F3D22DD11B100A2ECAE /* TrackingViewController.swift */,
 				F47B8F3F22DD11B100A2ECAE /* JourneyViewController.swift */,
-				F408E5BF22DEDEF300543047 /* BaseViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -473,7 +470,6 @@
 				F408E5C322DEDF5000543047 /* Constants.swift in Sources */,
 				F4E9E49D22E3CF5300D079A2 /* ViewExtension.swift in Sources */,
 				F47B8F3E22DD11B100A2ECAE /* TrackingViewController.swift in Sources */,
-				F408E5C022DEDEF300543047 /* BaseViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

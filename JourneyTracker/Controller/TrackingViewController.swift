@@ -10,12 +10,11 @@ import UIKit
 import MapKit
 import CoreLocation
 
-class TrackingViewController: BaseViewController {
+class TrackingViewController: UIViewController {
     
     private var trackViewModel: TrackingViewModel!
     var trackingModel: TrackingModel!
-    fileprivate var locationManager = CLLocationManager()
-    fileprivate var sourceLocation = CLLocation()
+    var isUserIntracked: Bool!
     
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var tractingSwitch: UISwitch! {
@@ -23,13 +22,25 @@ class TrackingViewController: BaseViewController {
             self.tractingSwitch.isOn = KeychainManager.getIsTrackingStatusFromWapper()
         }
     }
-    @IBOutlet weak var trackMeLabel: UILabel!
-
+    @IBOutlet weak var trackMeLabel: UILabel! {
+        didSet {
+            self.trackMeLabel.roundCorner(radius: 5)
+        }
+    }
+    
+    @IBOutlet weak var recenterButton: UIButton! {
+        didSet {
+            self.recenterButton.roundCorner(radius: self.recenterButton.frame.width/2)
+            self.recenterButton.isHidden = true
+        }
+    }
+    
     //MARK:- View init
     override func viewDidLoad() {
         super.viewDidLoad()
         
         initialSetup()
+        setupModel()
         bindValues()
     }
     
@@ -42,46 +53,53 @@ class TrackingViewController: BaseViewController {
         self.mapView.showsCompass = true
         self.mapView.layoutMargins = UIEdgeInsets.init(top: 20, left: 20, bottom: 20, right: 20)
         self.mapView.delegate = self
-     
-        self.trackViewModel = TrackingViewModel()
         
         //2.
-        // locationManager setup
-        self.locationManager.requestAlwaysAuthorization()
-        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        self.locationManager.distanceFilter = 2
-        self.locationManager.delegate = self
+        //init the viewmodel
+        self.trackViewModel = TrackingViewModel()
+    }
+    
+    func setupModel() {
         
+        self.view.showLoadingIndicator()
+        
+        //Check the trackingModel variable and change the UI based on screen
         //To change the mapview with journey data or current data
         if self.trackingModel == nil {
             
-//                        KeychainManager.removeWapperForKey(key: Constants.KeyChain.isTracking)
-//                        KeychainManager.removeWapperForKey(key: Constants.KeyChain.journey)
-            
+//            KeychainManager.removeWapperForKey(key: Constants.KeyChain.isTracking)
+//            KeychainManager.removeWapperForKey(key: Constants.KeyChain.journey)
+            //1.
+            //Init
             self.trackViewModel.isForTracking = true
             self.trackViewModel.isTracking = KeychainManager.getIsTrackingStatusFromWapper()
-
-            //FIXME: Testing
-            self.sourceLocation = CLLocation.init(latitude: 51.5079, longitude: 0.1378)
-
+            self.trackViewModel.isSourceLocationCalled = false
+            self.trackViewModel.pointAnnotation = [MKPointAnnotation]()
+            self.trackViewModel.polyline = MKPolyline()
+            self.trackViewModel.trackingModel = nil
+            self.trackViewModel.sourceLocation =  self.trackViewModel.locationManager.location ?? CLLocation()
+            self.trackingModel = nil
+            self.isUserIntracked = false
+            
+            if let userLocation = self.trackViewModel.locationManager.location {
+                self.trackViewModel.sourceLocation = userLocation
+            }
+            
             if KeychainManager.getIsTrackingStatusFromWapper() == true {
                 
-                //1.
+                //2.
                 //Creating the variable
                 var allJourney: [TrackingModel] =  [TrackingModel]()
                 
-                //2.
+                //3.
                 //Get all values from the keychain
                 allJourney = KeychainManager.getALLDataFromWapper()
                 
+                //4.
                 //checking the array contains the value
                 //Getting the last object to update the the journey id in keychain
                 if allJourney.isEmpty == false, let journey = allJourney.last {
                     
-                    //4.
-                    //Passing the current location to the view model
-                    self.trackViewModel.sourceLocation = self.sourceLocation
-
                     //5.
                     //Passing the value to view model to update the map
                     self.trackViewModel.setupJouneyPoints(trackingModel: journey)
@@ -97,44 +115,39 @@ class TrackingViewController: BaseViewController {
         }
         else {
             
-            //FIXME: Testing
-             self.sourceLocation = CLLocation.getLocationFrom(lat: self.trackingModel.sourceLat, long: self.trackingModel.sourceLong)
-
+            self.trackViewModel.sourceLocation = CLLocation.getLocationFrom(lat: self.trackingModel.sourceLat, long: self.trackingModel.sourceLong)
+            
             //1.
-            //Passing the start location to the view model
-            self.trackViewModel.sourceLocation = self.sourceLocation
-
-            //2.
             //Hide the switch & lable
             self.trackMeLabel.isHidden = true
             self.tractingSwitch.isHidden = true
             self.trackViewModel.isForTracking = false
             
-            //3.
+            //2.
             //Passing the value to view model to update the map
             self.trackViewModel.setupJouneyPoints(trackingModel: self.trackingModel)
         }
     }
-    
     func setupLocationManagerandZoomLevel() {
-
-        locationManager.startUpdatingLocation()
+        
+        self.recenterButton.isHidden = false
+        self.trackViewModel.isSourceLocationCalled = false
+        self.trackViewModel.locationManager.delegate = self
+        self.trackViewModel.locationManager.startUpdatingLocation()
         //2.
         //Zoom to user location
-        if let userLocation = locationManager.location {
+        if let userLocation = self.trackViewModel.locationManager.location {
             
-          //  self.sourceLocation = userLocation
+            self.trackViewModel.sourceLocation = userLocation
             let viewRegion = MKCoordinateRegion(center: userLocation.coordinate, latitudinalMeters: 200, longitudinalMeters: 200)
             self.mapView.setRegion(viewRegion, animated: false)
         }
-        
-        //4.
-        //Passing the current location to the view model
-        self.trackViewModel.sourceLocation = self.sourceLocation        
     }
     
     func setupMapforNotTrackingState() {
-    
+        
+        self.recenterButton.isHidden = true
+
         //1.
         //Removing all annotations
         self.mapView.removeAnnotations(self.mapView.annotations)
@@ -145,15 +158,18 @@ class TrackingViewController: BaseViewController {
         
         //3.
         //Zoom to user location
-        if let userLocation = self.locationManager.location {
+        if let userLocation = self.trackViewModel.locationManager.location {
             
-            //  self.sourceLocation = userLocation
+            self.trackViewModel.sourceLocation = userLocation
             let viewRegion = MKCoordinateRegion(center: userLocation.coordinate, latitudinalMeters: 200, longitudinalMeters: 200)
             self.mapView.setRegion(viewRegion, animated: true)
         }
         
-            //4.
-            self.locationManager.stopUpdatingLocation()
+        //4.
+        self.trackViewModel.locationManager.stopUpdatingLocation()
+        
+        self.view.hideLoadingIndicator()
+        
     }
     
     func bindValues() {
@@ -171,14 +187,34 @@ class TrackingViewController: BaseViewController {
         //Switch status handler
         trackViewModel.switchStatChanged = { isEnable in
             
-           self.changeMapViewData(isEnable: isEnable)
+            self.changeMapViewData(isEnable: isEnable)
+        }
+        
+        //show alert
+        trackViewModel.alertBlock = { message in
+            
+            self.showOkButtonAlert(message: message)
         }
     }
     
+    
+    //MARK:- Action methods
+    @IBAction func trackMeValueChanged(_ sender: Bool) {
+        
+        trackViewModel.switchValueChanged(state: tractingSwitch.isOn)
+    }
+    
+    @IBAction func recenterButtonTapped(_ sender: Any) {
+        
+        isUserIntracked = true
+        self.mapView.showAnnotations(self.mapView.annotations, animated: true)
+        
+    }
+    //MARK:- Helper
     func changeMapViewData(isEnable: Bool) {
         
         DispatchQueue.main.async {
-           
+            
             if isEnable == true {
                 
                 //2.
@@ -193,27 +229,22 @@ class TrackingViewController: BaseViewController {
             
             //reinit
             self.trackViewModel.isTracking = isEnable
+            self.trackViewModel.isSourceLocationCalled = false
             self.trackViewModel.pointAnnotation = [MKPointAnnotation]()
             self.trackViewModel.polyline = MKPolyline()
             self.trackViewModel.trackingModel = nil
-            self.trackViewModel.sourceLocation = self.sourceLocation
+            self.trackViewModel.sourceLocation =  self.trackViewModel.locationManager.location ?? CLLocation()
             self.trackingModel = nil
+            self.isUserIntracked = false
         }
     }
     
-    //MARK:- Action methods
-    @IBAction func trackMeValueChanged(_ sender: Bool) {
-        
-        trackViewModel.switchValueChanged(state: tractingSwitch.isOn)
-    }
-    
-    //MARK:- Helper
     func drawRoutesandAddAnnotations(pointAnnotation: [MKPointAnnotation]?, polyline: MKPolyline) {
         
         if self.mapView.annotations.isEmpty == false {
             //1.
-            //Removing the last annotations
-            self.mapView.removeAnnotations(self.mapView.annotations.dropLast())
+            //Removing the annotations
+            self.mapView.removeAnnotations(self.mapView.annotations)
         }
         
         //3.
@@ -224,22 +255,33 @@ class TrackingViewController: BaseViewController {
         //2.
         //Add the placemark to the map view if it present
         if let pointAnnotation = pointAnnotation {
-
+            
             self.mapView.addAnnotations(pointAnnotation)
         }
         
-        //4.
-        //Make the annotations to visible in the screen if it present
-        self.mapView.showAnnotations(self.mapView.annotations, animated: true)
+        if self.isUserIntracked == false {
+            //4.
+            //Make the annotations to visible in the screen if it present
+            self.mapView.showAnnotations(self.mapView.annotations, animated: true)
+        }
+        isUserIntracked = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            self.view.hideLoadingIndicator()
+        }
+    }
+    
+    func showOkButtonAlert(message: String) {
+        
+        self.showAlert(title:Constants.AppName.appName, message: message, OkButtonBlock: {
+            
+        })
     }
 }
 
 extension TrackingViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
-        self.locationManager.stopUpdatingLocation()
-
+                
         //1.
         //Getting the current location
         let location: CLLocation = locations[0] as CLLocation
@@ -262,6 +304,13 @@ extension TrackingViewController: MKMapViewDelegate {
             return polylineRenderer
         }
         return MKPolylineRenderer()
+    }
+    
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        
+        if isUserIntracked == false {
+            isUserIntracked = true
+        }
     }
 }
 

@@ -9,9 +9,9 @@
 import UIKit
 
 class JourneyViewController: UIViewController {
-
+    
     var journeyDataSource = JourneyDataSource()
-
+    
     @IBOutlet weak var tableView: UITableView! {
         didSet {
             self.tableView.dataSource = journeyDataSource
@@ -22,7 +22,7 @@ class JourneyViewController: UIViewController {
         
         // Do any additional setup after loading the view.
         
- 
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -42,11 +42,20 @@ class JourneyViewController: UIViewController {
         
         journeyDataSource.journeyListData = KeychainManager.getALLDataFromWapper()
         
-        DispatchQueue.main.async {
+        if journeyDataSource.journeyListData.isEmpty {
             
-            UIView.transition(with: self.tableView, duration: 1.0, options: .transitionCrossDissolve, animations: {
-                self.tableView.reloadData()
-            }, completion: nil)
+            tableView.isHidden = true
+        }
+        else {
+            
+            tableView.isHidden = false
+            
+            DispatchQueue.main.async {
+                
+                UIView.transition(with: self.tableView, duration: 1.0, options: .transitionCrossDissolve, animations: {
+                    self.tableView.reloadData()
+                }, completion: nil)
+            }
         }
     }
     

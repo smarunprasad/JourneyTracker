@@ -17,17 +17,20 @@ class TrackingViewModel {
     
     var switchStatChanged: ((Bool)-> Void)?
     
+    var alertBlock: ((String)-> Void)?
+
     var polyline: MKPolyline?
     var sourceLocation = CLLocation()
     var pointAnnotation = [MKPointAnnotation]()
     var trackingModel: TrackingModel?
     var isForTracking: Bool!
     var isTracking: Bool!
+    var isSourceLocationCalled: Bool!
+    var locationManager = CLLocationManager()
     
     private var lastJourneyId = 0
     private var allJourney: [TrackingModel] =  [TrackingModel]()
     private var startLocation = CLLocation()
-    private var locationManager = CLLocationManager()
     private var duration: Int?
     private var startDate: Date!
     private var endDate: Date?
@@ -36,6 +39,20 @@ class TrackingViewModel {
     private var sourcePoint: CLLocationCoordinate2D!
     private var travelledPoints = [TravelledPoint]()
     
+    init() {
+        
+        setupLocationManager()
+    }
+    
+    func setupLocationManager() {
+        
+        //1.
+        // locationManager setup
+        self.locationManager.requestAlwaysAuthorization()
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        self.locationManager.distanceFilter = 2
+        self.locationManager.startUpdatingLocation()
+    }
     //MARK:- MapView Helper
     func setupMapViewWithLocation(location: CLLocation) {
         
@@ -84,17 +101,25 @@ class TrackingViewModel {
         //Returns the polyline direction between 2 mapitem in reloadDataBlock
         getDirectionBetweenTheMapItems(sourceMapItem: items.source, destinationMapItem: items.destination)
         
+      
+        //11.
         //check is the map appear for tracking or appear for view
         if isForTracking == true {
             
-            if self.source == nil {
-                //11.
+            if self.isSourceLocationCalled == false {
+                //12.
                 //Setting the source location in the model
-                getPlacedetailsFromLocation(location: self.sourceLocation)
+                self.getPlacedetailsFromLocation(location: self.sourceLocation)
+                self.isSourceLocationCalled = true
+                
             }
-            //12.
+            
+            //13.
             //Setting the destination location in the model
-            getPlacedetailsFromLocation(location: location)
+            DispatchQueue.main.async {
+                self.getPlacedetailsFromLocation(location: location)
+            }
+            
         }
     }
     
@@ -147,6 +172,7 @@ class TrackingViewModel {
         //2.
         // Calculate the direction using directionRequest
         let directions = MKDirections(request: directionRequest)
+
         //3.
         //Direction Request
         directions.calculate { (response, error) in
@@ -155,6 +181,11 @@ class TrackingViewModel {
                 if let error = error {
                     print("Error: \(error)")
                 }
+                self.polyline = nil
+                
+                //Returning to controller to update the map view
+                self.reloadDataBlock?()
+           
                 return
             }
             
@@ -195,7 +226,6 @@ class TrackingViewModel {
         }
     }
     
-    
     //MARK:- Switch Actiopn Helper
     func switchValueChanged(state: Bool) {
         
@@ -203,9 +233,17 @@ class TrackingViewModel {
         
         if state == false {
             
-            if self.source != nil && destination != nil {
+            if self.source != nil && destination != nil && !travelledPoints.isEmpty {
                 //Save all the value in the model
                 saveValueInModel()
+                
+                DispatchQueue.main.async {
+                    self.alertBlock?(Constants.Message.journeySaved)
+                }
+                
+                //Returning to controller to update the map view
+                self.reloadDataBlock?()
+                
             }
         }
         
@@ -217,6 +255,7 @@ class TrackingViewModel {
     }
     
     //MARK:- Save value in model & keychain Helper
+    
     func getPlacedetailsFromLocation(location: CLLocation) {
         
         self.locationManager.getPlace(for: location) { placemark in
@@ -225,6 +264,13 @@ class TrackingViewModel {
             guard let placemark = placemark else { return }
             
             //1.
+            //adding the location
+            if let plocation = placemark.location {
+                
+                //2.
+                //To save the source & destination locations
+                self.addSourceandDestinationLocation(location: plocation)
+            }
             //Checking for the sublocality
             guard let subLocality = placemark.subLocality else {
                 
@@ -246,13 +292,9 @@ class TrackingViewModel {
                 self.addSourceandDestination(value: locality)
                 return
             }
-            //2.
+            //3.
             //Passing the sublocality to save the values
             self.addSourceandDestination(value: subLocality)
-            
-            //3.
-            //adding the location
-            self.addSourceandDestinationLocation(location: location)
         }
     }
     
@@ -263,13 +305,18 @@ class TrackingViewModel {
             //2.
             //Adding Values
             self.source = value
+            //3.
             //Set the current date to display it in the journey list
             self.startDate = Date()
         }
         else {
-            //3.
+            //4.
             //Adding Values
             self.destination = value
+            
+            //5.
+            //Save all the value in the model
+            self.saveValueInModel()
         }
     }
     
@@ -291,10 +338,6 @@ class TrackingViewModel {
             //4.
             //Append the value to the array
             self.travelledPoints.append(travelledPoint)
-            
-            //5.
-            //Save all the value in the model
-            self.saveValueInModel()
         }
     }
     
@@ -366,7 +409,7 @@ class TrackingViewModel {
         //8.
         //Adding the current value to the variable
         if let trackingModel = self.trackingModel {
-      
+            
             allJourney.append(trackingModel)
         }
         print("count - \(allJourney.count)")

@@ -25,12 +25,12 @@ extension UIView {
     func showLoadingIndicator() {
         
         let spinnerView = UIView.init(frame: self.bounds)
-        spinnerView.backgroundColor = .white
+        spinnerView.backgroundColor = UIColor.black.withAlphaComponent(0.3)
         
         let activityIndicator = UIActivityIndicatorView.init(style: .whiteLarge)
         activityIndicator.startAnimating()
         activityIndicator.center = CGPoint.init(x: spinnerView.bounds.midX , y: spinnerView.bounds.midY)
-        activityIndicator.color = .darkGray
+        activityIndicator.color = .white
         
         DispatchQueue.main.async {
             spinnerView.addSubview(activityIndicator)

@@ -41,12 +41,26 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yqh-EF-Ugh">
+                                <rect key="frame" x="314" y="713" width="50" height="50"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="34C-fp-73t"/>
+                                    <constraint firstAttribute="width" secondItem="yqh-EF-Ugh" secondAttribute="height" id="a4Z-CX-4po"/>
+                                </constraints>
+                                <state key="normal" image="route"/>
+                                <connections>
+                                    <action selector="recenterButtonTapped:" destination="9pv-A4-QxB" eventType="touchUpInside" id="yap-d0-fI4"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="akq-oP-6OM" firstAttribute="centerY" secondItem="gTo-aV-x7Y" secondAttribute="centerY" id="6oi-yh-Q36"/>
                             <constraint firstItem="akq-oP-6OM" firstAttribute="leading" secondItem="PQr-Ze-W5v" secondAttribute="leading" constant="15" id="7Rr-GO-oRE"/>
                             <constraint firstItem="gTo-aV-x7Y" firstAttribute="top" secondItem="PQr-Ze-W5v" secondAttribute="top" constant="16" id="AEi-Xt-rj7"/>
+                            <constraint firstItem="PQr-Ze-W5v" firstAttribute="bottom" secondItem="yqh-EF-Ugh" secondAttribute="bottom" constant="50" id="CpR-9V-VWm"/>
+                            <constraint firstItem="PQr-Ze-W5v" firstAttribute="trailing" secondItem="yqh-EF-Ugh" secondAttribute="trailing" constant="50" id="EeU-Zr-ZNM"/>
                             <constraint firstItem="gTo-aV-x7Y" firstAttribute="leading" secondItem="akq-oP-6OM" secondAttribute="trailing" constant="12" id="KdX-aA-uLI"/>
                             <constraint firstItem="g7t-le-MzY" firstAttribute="top" secondItem="tsR-hK-woN" secondAttribute="top" id="OVF-6r-Xm2"/>
                             <constraint firstAttribute="bottom" secondItem="g7t-le-MzY" secondAttribute="bottom" id="eMG-lU-Rv9"/>
@@ -58,6 +72,7 @@
                     <tabBarItem key="tabBarItem" title="track" image="track" id="acW-dT-cKf"/>
                     <connections>
                         <outlet property="mapView" destination="g7t-le-MzY" id="XfR-pu-shp"/>
+                        <outlet property="recenterButton" destination="yqh-EF-Ugh" id="Zhm-gH-p1z"/>
                         <outlet property="trackMeLabel" destination="akq-oP-6OM" id="jXW-9d-lCw"/>
                         <outlet property="tractingSwitch" destination="gTo-aV-x7Y" id="pD5-b4-Vua"/>
                     </connections>
@@ -109,6 +124,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Histories available" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KiB-iT-7II">
+                                <rect key="frame" x="20" y="437.5" width="374" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="5EO-0W-9zT">
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -120,9 +141,12 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="5EO-0W-9zT" firstAttribute="leading" secondItem="dGb-Aw-4vO" secondAttribute="leading" id="0Y3-J0-GvN"/>
+                            <constraint firstItem="KiB-iT-7II" firstAttribute="centerX" secondItem="zJm-x6-sfB" secondAttribute="centerX" id="1mY-T0-BVa"/>
+                            <constraint firstItem="KiB-iT-7II" firstAttribute="leading" secondItem="dGb-Aw-4vO" secondAttribute="leading" constant="20" id="EYJ-zd-8tB"/>
                             <constraint firstItem="5EO-0W-9zT" firstAttribute="top" secondItem="dGb-Aw-4vO" secondAttribute="top" id="Lzh-nE-B1y"/>
                             <constraint firstItem="dGb-Aw-4vO" firstAttribute="trailing" secondItem="5EO-0W-9zT" secondAttribute="trailing" id="Oeo-Mh-Tnu"/>
                             <constraint firstItem="dGb-Aw-4vO" firstAttribute="bottom" secondItem="5EO-0W-9zT" secondAttribute="bottom" id="hCD-7m-9uJ"/>
+                            <constraint firstItem="KiB-iT-7II" firstAttribute="centerY" secondItem="zJm-x6-sfB" secondAttribute="centerY" id="kim-jx-TfV"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="dGb-Aw-4vO"/>
                     </view>
@@ -137,6 +161,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="route" width="30" height="30"/>
         <image name="track" width="25" height="25"/>
     </resources>
 </document>

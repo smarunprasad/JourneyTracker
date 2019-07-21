@@ -20,7 +20,7 @@ class TrackingViewModel {
     var polyline: MKPolyline?
     var sourceLocation = CLLocation()
     var pointAnnotation = [MKPointAnnotation]()
-    var trackingModel: TrackingModel!
+    var trackingModel: TrackingModel?
     var isForTracking: Bool!
     var isTracking: Bool!
     
@@ -365,7 +365,10 @@ class TrackingViewModel {
         
         //8.
         //Adding the current value to the variable
-        allJourney.append(self.trackingModel)
+        if let trackingModel = self.trackingModel {
+      
+            allJourney.append(trackingModel)
+        }
         print("count - \(allJourney.count)")
         
         do {

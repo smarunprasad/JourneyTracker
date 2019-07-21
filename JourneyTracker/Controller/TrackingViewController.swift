@@ -134,11 +134,7 @@ class TrackingViewController: BaseViewController {
     }
     
     func setupMapforNotTrackingState() {
-        
-        //reinit
-        self.trackViewModel = TrackingViewModel()
-        self.trackingModel = nil
-        
+    
         //1.
         //Removing all annotations
         self.mapView.removeAnnotations(self.mapView.annotations)
@@ -184,11 +180,6 @@ class TrackingViewController: BaseViewController {
         DispatchQueue.main.async {
            
             if isEnable == true {
-    
-                //1.
-                //reinit
-                self.trackViewModel = TrackingViewModel()
-                self.trackingModel = nil
                 
                 //2.
                 //Setup the mapview to zoom to current location & disable the location update
@@ -199,6 +190,14 @@ class TrackingViewController: BaseViewController {
                 //Initiate the location manager and update the mapView based on the location changes
                 self.setupMapforNotTrackingState()
             }
+            
+            //reinit
+            self.trackViewModel.isTracking = isEnable
+            self.trackViewModel.pointAnnotation = [MKPointAnnotation]()
+            self.trackViewModel.polyline = MKPolyline()
+            self.trackViewModel.trackingModel = nil
+            self.trackViewModel.sourceLocation = self.sourceLocation
+            self.trackingModel = nil
         }
     }
     
@@ -206,7 +205,6 @@ class TrackingViewController: BaseViewController {
     @IBAction func trackMeValueChanged(_ sender: Bool) {
         
         trackViewModel.switchValueChanged(state: tractingSwitch.isOn)
-       // self.changeMapViewData(isEnable: tractingSwitch.isOn)
     }
     
     //MARK:- Helper
